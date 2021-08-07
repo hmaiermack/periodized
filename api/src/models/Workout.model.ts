@@ -13,30 +13,16 @@ export class WorkoutClass {
     @prop({ ref:'UserClass', type: () => String})
     public user!:  Ref<UserClass, string>;
 
-    @prop()
+    @prop({
+        type: () => [ProgressionRule]
+    })
     public progressionRules?: ProgressionRule[];
   
-    @prop()
+    @prop({
+        type: () => [Exercise]
+    })
     public exercises!: Exercise[];
 
-}
-
-class Exercise {
-
-    @prop()
-    public name!: string;
-
-    @prop()
-    public sets!: string;
-    
-    @prop()
-    public reps!: string;
-
-    @prop()
-    public progressionRule?: ProgressionRule;
-
-    @prop({ _id: false})
-    public mostRecentExerciseData?: ExerciseData[]
 }
 
 class ExerciseData {
@@ -77,6 +63,26 @@ class ProgressionRule {
     })
     public progressionFrequency!: ProgressionFrequency;
 
+}
+
+class Exercise {
+
+    @prop()
+    public name!: string;
+
+    @prop()
+    public sets!: string;
+    
+    @prop()
+    public reps!: string;
+
+    @prop({type: () => ProgressionRule})
+    public progressionRule?: ProgressionRule;
+
+    @prop({
+         _id: false, type: () => [ExerciseData]
+    })
+    public mostRecentExerciseData?: ExerciseData[]
 }
 
 export const WorkoutModel = getModelForClass(WorkoutClass)
