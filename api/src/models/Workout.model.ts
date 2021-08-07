@@ -8,28 +8,75 @@ import { UserClass } from './User.model';
 export class WorkoutClass {
 
     @prop()
-    name!: string;
+    public name!: string;
     
     @prop({ ref:'UserClass', type: () => String})
     public user!:  Ref<UserClass, string>;
-  
-    @prop({
-        _id: false
-    })
-    exercises!: Exercise[];
 
+    @prop()
+    public progressionRules?: ProgressionRule[];
   
+    @prop()
+    public exercises!: Exercise[];
+
 }
 
 class Exercise {
-    @prop()
-    name!: string;
 
     @prop()
-    sets!: string;
+    public name!: string;
+
+    @prop()
+    public sets!: string;
     
     @prop()
-    reps!: string;
+    public reps!: string;
+
+    @prop()
+    public progressionRule?: ProgressionRule;
+
+    @prop({ _id: false})
+    public mostRecentExerciseData?: ExerciseData[]
+}
+
+class ExerciseData {
+
+    @prop()
+    public weight!: number;
+
+    @prop()
+    public reps!: number;
+
+}
+
+enum ProgressionType {
+    CONSTANT = 'constant',
+    PERCENTAGE = 'percentage'
+}
+
+enum ProgressionFrequency {
+    EVERY = 'every',
+    EVERY_OTHER = 'every_other',
+}
+
+class ProgressionRule {
+
+    @prop()
+    public description!: string;
+
+    @prop({
+        enum: ProgressionType
+    })
+    public progressionType!: ProgressionType;
+
+    @prop()
+    public progressionAmount!: number;
+
+    @prop({
+        enum: ProgressionFrequency
+    })
+    public progressionFrequency!: ProgressionFrequency;
+
 }
 
 export const WorkoutModel = getModelForClass(WorkoutClass)
