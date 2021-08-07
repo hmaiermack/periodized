@@ -1,6 +1,6 @@
 import { Express, Request, Response } from "express";
 import express from 'express'
-import { createUser } from "./controllers/userController";
+import { createUser, getUser } from "./controllers/userController";
 
 export function healthCheck (app: Express) {
     app.get('/health', (req: Request, res: Response) => {
@@ -11,6 +11,7 @@ export function healthCheck (app: Express) {
 const userRouter = express.Router()
 
 userRouter.route('/register').post(createUser)
+userRouter.route('/get').get(getUser)
 userRouter.post('/login')
 
 export { userRouter }

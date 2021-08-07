@@ -12,6 +12,7 @@
     "@typegoose/typegoose": "^8.0.0",
     "config": "^3.3.6",
     "cors": "^2.8.5",
+    "date-fns": "^2.23.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",

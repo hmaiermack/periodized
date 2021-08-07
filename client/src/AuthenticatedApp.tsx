@@ -25,12 +25,28 @@ const createUser = async () => {
     .then(json => console.log(json))
 }
 
+const getUser = async () => {
+    const user = auth.currentUser
+    const token = user && (await user.getIdToken());
+
+    fetch('http://localhost:1337/api/users/get', {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    }).then(res => res.json())
+    .then(json => console.log(json))
+}
+
 const AuthenticatedApp = (props: Props) => {
     return (
         <div>
             Authenticated!
             <button onClick={signOut} style={{display: 'block'}}>Sign Out</button>
             <button onClick={createUser} style={{display: 'block'}}>Create a user</button>
+            <button onClick={getUser} style={{display: 'lbock'}}>Get user info</button>
         </div>
     )
 }
