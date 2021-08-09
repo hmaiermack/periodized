@@ -1,9 +1,6 @@
 import React from 'react'
 import { auth } from '../src/firebaseSetup'
 
-type Props = {
-    
-}
 
 const signOut = async () => {
     await auth.signOut()
@@ -13,14 +10,14 @@ const createUser = async () => {
     const user = auth.currentUser
     const token = user && (await user.getIdToken());
 
-
     fetch('http://localhost:1337/api/users/register', {
         method: 'POST',
         mode: 'cors',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
-        }
+        },
+        body: JSON.stringify({ username: 'username'})
     }).then(res => res.json())
     .then(json => console.log(json))
 }
@@ -40,7 +37,7 @@ const getUser = async () => {
     .then(json => console.log(json))
 }
 
-const AuthenticatedApp = (props: Props) => {
+const AuthenticatedApp = () => {
     return (
         <div>
             Authenticated!

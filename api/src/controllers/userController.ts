@@ -2,31 +2,30 @@ import mongoose from 'mongoose'
 import { Request, Response } from 'express'
 import asyncHandler from 'express-async-handler'
 import { User } from '../models/User.model'
-import { ProgramModel } from '../models/Program.model'
+import { createUser } from '../services/user.service'
 
-const createUser = asyncHandler(async (req: Request, res: Response) => {
+const createUserController = asyncHandler(async (req: Request, res: Response) => {
 
     const _id = req.currentUser.uid
-    console.log(_id)
+    const username = req.body.username
 
     const userExists = await User.findOne({ _id })
 
-    const programs = await ProgramModel.find({})
-
     if(userExists) {
-        res.status(400)
-        throw new Error('User already exists')
+        res.status(400).json({
+            message: 'User already exists'
+        })
+        throw new Error()
     }
 
-    const user = await User.create({
+    const user = await createUser({
         _id,
-        programsList: 1
+        username
     })
 
     if(user){
         res.status(201).json({
             _id: user._id,
-            programs: programs,
             message: "Account successfully created."
         })
     } else {
@@ -51,6 +50,6 @@ const getUser = asyncHandler(async (req: Request, res: Response) => {
 })
 
 export {
-    createUser,
+    createUserController,
     getUser
 }
