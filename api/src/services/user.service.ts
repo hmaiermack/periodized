@@ -1,11 +1,19 @@
-import { DocumentDefinition } from "mongoose";
+import { mongoose } from "@typegoose/typegoose";
+import { DocumentDefinition, FilterQuery } from "mongoose";
 import { User, UserClass } from "../models/User.model";
 
 
 export async function createUser(userInfo: DocumentDefinition<UserClass>) {
-    try {
-        return await User.create(userInfo)
-    } catch (e) {
-        throw new Error(e)
-    }
+    
+    const { _id, username } = userInfo
+    
+    return await User.create({
+        _id,
+        username
+    })
+
+}
+
+export async function getUser(query: FilterQuery<UserClass>) {
+    return await User.findOne(query)
 }

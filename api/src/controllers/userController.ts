@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import { Request, Response } from 'express'
 import asyncHandler from 'express-async-handler'
 import { User } from '../models/User.model'
-import { createUser } from '../services/user.service'
+import { createUser, getUser } from '../services/user.service'
 
 const createUserController = asyncHandler(async (req: Request, res: Response) => {
 
@@ -34,22 +34,25 @@ const createUserController = asyncHandler(async (req: Request, res: Response) =>
     }
 })
 
-const getUser = asyncHandler(async (req: Request, res: Response) => {
+const getUserController = asyncHandler(async (req: Request, res: Response) => {
     const _id = req.currentUser.uid
 
-    const user = await User.findOne({ _id })
+    const user = await getUser({ _id })
 
     if(user){
         res.status(201).json({
-            user: user
+            _id: user._id,
+            username: user.username
         })
     } else {
-        res.status(400)
-        throw new Error("User not found")
+        res.status(400).json({
+            message: 'User not found'
+        })
+        throw new Error()
     }
 })
 
 export {
     createUserController,
-    getUser
+    getUserController
 }
