@@ -15,5 +15,11 @@ export async function createUser(userInfo: DocumentDefinition<UserClass>) {
 }
 
 export async function getUser(query: FilterQuery<UserClass>) {
-    return await User.findOne(query)
+    return User.findOne(query)
+}
+
+export async function deleteUser(query: FilterQuery<UserClass>) {
+
+    return await User.findOneAndDelete(query)
+
 }

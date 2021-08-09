@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 import { Request, Response } from 'express'
 import asyncHandler from 'express-async-handler'
 import { User } from '../models/User.model'
-import { createUser, getUser } from '../services/user.service'
+import { createUser, deleteUser, getUser } from '../services/user.service'
 
 const createUserController = asyncHandler(async (req: Request, res: Response) => {
 
@@ -52,7 +52,26 @@ const getUserController = asyncHandler(async (req: Request, res: Response) => {
     }
 })
 
+const deleteUserController = asyncHandler(async (req: Request, res: Response) => {
+    const _id = req.currentUser.uid
+
+    const deleted = await deleteUser({ _id })
+
+    if(deleted) {
+        res.status(201).json({
+            deleted: deleted,
+            message: 'Account deleted.'
+        })
+    } else {
+        res.status(400).json({
+            message: 'Something went wrong'
+        })
+        throw new Error()
+    }
+})
+
 export {
     createUserController,
-    getUserController
+    getUserController,
+    deleteUserController
 }
