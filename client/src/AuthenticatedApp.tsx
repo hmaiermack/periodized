@@ -1,5 +1,13 @@
 import React from 'react'
 import { auth } from '../src/firebaseSetup'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
+import RegisterPage from './pages/RegisterPage';
+  
 
 
 const signOut = async () => {
@@ -55,6 +63,10 @@ const getUser = async () => {
 
 const AuthenticatedApp = () => {
     return (
+        <Router>
+            <Route path='/register'>
+                <RegisterPage />
+            </Route>
         <div>
             Authenticated!
             <button onClick={signOut} style={{display: 'block'}}>Sign Out</button>
@@ -62,6 +74,7 @@ const AuthenticatedApp = () => {
             <button onClick={getUser} style={{display: 'block'}}>Get user info</button>
             <button onClick={deleteUser} style={{display: 'block'}}>Delete user</button>
         </div>
+        </Router>
     )
 }
 
