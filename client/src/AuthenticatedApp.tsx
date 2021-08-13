@@ -67,13 +67,15 @@ const AuthenticatedApp = () => {
             <Route path='/register'>
                 <RegisterPage />
             </Route>
-        <div>
-            Authenticated!
-            <button onClick={signOut} style={{display: 'block'}}>Sign Out</button>
-            <button onClick={createUser} style={{display: 'block'}}>Create a user</button>
-            <button onClick={getUser} style={{display: 'block'}}>Get user info</button>
-            <button onClick={deleteUser} style={{display: 'block'}}>Delete user</button>
-        </div>
+            <div className="min-h-screen bg-gray-100 flex flex-col justify-center">
+                <div>
+                    Authenticated!
+                    <button onClick={signOut} style={{display: 'block'}}>Sign Out</button>
+                    <button onClick={createUser} style={{display: 'block'}}>Create a user</button>
+                    <button onClick={getUser} style={{display: 'block'}}>Get user info</button>
+                    <button onClick={deleteUser} style={{display: 'block'}}>Delete user</button>
+                </div>
+            </div>
         </Router>
     )
 }
