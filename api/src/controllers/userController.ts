@@ -9,13 +9,11 @@ const createUserController = asyncHandler(async (req: Request, res: Response) =>
     const _id = req.body.uid
     const username = req.body.username
 
-    const userExists = await User.findOne({ _id })
+    const usernameExists = await User.findOne({ username })
 
-    if(userExists) {
-        res.status(400).json({
-            message: 'User already exists'
-        })
-        throw new Error()
+    if(usernameExists) {
+        res.status(400)
+        throw new Error('That username is already taken.')
     }
 
     const user = await createUser({
@@ -25,8 +23,7 @@ const createUserController = asyncHandler(async (req: Request, res: Response) =>
 
     if(user){
         res.status(201).json({
-            _id: user._id,
-            message: "Account successfully created."
+            _id: user._id
         })
     } else {
         res.status(400)

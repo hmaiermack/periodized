@@ -6,6 +6,9 @@ import connect from './db/connect'
 import cors from 'cors'
 import { healthCheck, userRouter } from './routes'
 import { decodeIDToken } from './utils/authToken'
+import errorHandlerMiddleware from './middleware/errorHandler'
+require('express-async-errors');
+
 
 
 const app = express()
@@ -19,6 +22,8 @@ connect()
 healthCheck(app)
 
 app.use('/api/users', userRouter)
+
+app.use(errorHandlerMiddleware)
 
 app.listen(config.port, () => {
     log.info(`Listening at port: ${config.port} on host: ${config.host}`)
