@@ -27,6 +27,8 @@ async function decodeIDToken(req: Request, res: Response, next: NextFunction) {
   
     next();
   }
+
+decodeIDToken.unless = require('express-unless')
   
 export {
     decodeIDToken

@@ -13,7 +13,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false}))
-app.use(decodeIDToken)
+app.use(decodeIDToken.unless({ path: ['/users/register']}))
 
 connect()
 healthCheck(app)

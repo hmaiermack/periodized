@@ -1,33 +1,13 @@
-import React from 'react'
 import { auth } from '../src/firebaseSetup'
 import {
     BrowserRouter as Router,
-    Switch,
     Route,
-    Link
   } from "react-router-dom";
-import RegisterPage from './pages/RegisterPage';
-  
+import RegisterPage from './pages/RegisterPage';  
 
 
 const signOut = async () => {
     await auth.signOut()
-}
-
-const createUser = async () => {
-    const user = auth.currentUser
-    const token = user && (await user.getIdToken());
-
-    fetch('http://localhost:1337/api/users/register', {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ username: 'username'})
-    }).then(res => res.json())
-    .then(json => console.log(json))
 }
 
 const deleteUser = async () => {
@@ -71,7 +51,6 @@ const AuthenticatedApp = () => {
                 <div>
                     Authenticated!
                     <button onClick={signOut} style={{display: 'block'}}>Sign Out</button>
-                    <button onClick={createUser} style={{display: 'block'}}>Create a user</button>
                     <button onClick={getUser} style={{display: 'block'}}>Get user info</button>
                     <button onClick={deleteUser} style={{display: 'block'}}>Delete user</button>
                 </div>

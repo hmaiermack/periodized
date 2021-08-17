@@ -1,6 +1,6 @@
 import { Express, Request, Response } from "express";
 import express from 'express'
-import { createUserController, deleteUserController, getUserController } from "./controllers/userController";
+import { createUserController, deleteUserController } from "./controllers/userController";
 
 export function healthCheck (app: Express) {
     app.get('/health', (req: Request, res: Response) => {
@@ -11,7 +11,7 @@ export function healthCheck (app: Express) {
 const userRouter = express.Router()
 
 userRouter.route('/register').post(createUserController)
-userRouter.route('/get').get(getUserController)
+// userRouter.route('/get').get(getUserController)
 userRouter.route('/delete').delete(deleteUserController)
 userRouter.post('/login')
 

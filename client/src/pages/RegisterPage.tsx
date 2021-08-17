@@ -3,6 +3,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup'
 import YupPassword from 'yup-password'
 import FormInput from '../components/FormInput';
+import { auth } from '../firebaseSetup';
+import { useCurrentUser } from '../shared/hooks/currentUser';
 //extend yup
 YupPassword(yup)
 
@@ -27,8 +29,28 @@ const RegisterPage = () => {
         resolver: yupResolver(registerSchema)
     });
 
-    const submitHandler: SubmitHandler<IFormInputs> = (input: IFormInputs) => {
-        console.log("submit");
+    const submitHandler: SubmitHandler<IFormInputs> = async (input: IFormInputs) => {
+            auth.createUserWithEmailAndPassword(input.Email, input.Password)
+                .then((userCredential) => {
+                    const user = userCredential.user
+                    console.log(user)
+                    return fetch('http://localhost:1337/api/users/register', {
+                        method: 'POST',
+                        mode: 'cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            username: input.Username,
+                            uid: user?.uid
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(json => console.log(json))    
+                    .catch((e) => {
+                        user?.delete()
+                        console.log(e)
+                    })
+                })
+                .catch(e => console.log(e))
     }
 
     return (
@@ -39,7 +61,7 @@ const RegisterPage = () => {
                     <div className="text-xl font-medium text-pGrey-400 m-2 text-center">Register</div>
                 </div>
                 <div className="max-w-md w-full mx-auto bg-white p-8 border border-pGrey-600 rounded">
-                    <form onSubmit={handleSubmit(data => console.log(data))} className="space-y-6">
+                    <form onSubmit={handleSubmit(formData => submitHandler(formData))} className="space-y-6">
                         <FormInput label="Username" register={register} errors={errors.Username} required={true}>
                             {errors.Username && errors.Username?.message && <span>{errors.Username.message}</span>}
                         </FormInput>

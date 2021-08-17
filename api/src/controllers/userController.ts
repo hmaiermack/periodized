@@ -6,7 +6,7 @@ import { createUser, deleteUser, getUserById } from '../services/userServices/in
 
 const createUserController = asyncHandler(async (req: Request, res: Response) => {
 
-    const _id = req.currentUser.uid
+    const _id = req.body.uid
     const username = req.body.username
 
     const userExists = await User.findOne({ _id })
@@ -34,23 +34,23 @@ const createUserController = asyncHandler(async (req: Request, res: Response) =>
     }
 })
 
-const getUserByIdController = asyncHandler(async (req: Request, res: Response) => {
-    const _id = req.currentUser.uid
+// const getUserByIdController = asyncHandler(async (req: Request, res: Response) => {
+//     const _id = req.currentUser.uid
 
-    const user = await getUserById({ _id })
+//     const user = await getUserById({ _id })
 
-    if(user){
-        res.status(201).json({
-            _id: user._id,
-            username: user.username
-        })
-    } else {
-        res.status(400).json({
-            message: 'User not found'
-        })
-        throw new Error()
-    }
-})
+//     if(user){
+//         res.status(201).json({
+//             _id: user._id,
+//             username: user.username
+//         })
+//     } else {
+//         res.status(400).json({
+//             message: 'User not found'
+//         })
+//         throw new Error()
+//     }
+// })
 
 const deleteUserController = asyncHandler(async (req: Request, res: Response) => {
     const _id = req.currentUser.uid
@@ -72,6 +72,5 @@ const deleteUserController = asyncHandler(async (req: Request, res: Response) =>
 
 export {
     createUserController,
-    getUserByIdController,
     deleteUserController
 }
