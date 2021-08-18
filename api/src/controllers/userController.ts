@@ -5,36 +5,53 @@ import createError from 'http-errors'
 import asyncHandler from 'express-async-handler'
 import { User } from '../models/User.model'
 import { createUser, deleteUser, getUserById } from '../services/userServices/index'
+import admin from 'firebase-admin'
+
 
 const createUserController = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
 
-    const _id = req.body.uid
-    const username = req.body.username
+    const { username, email, password } = req.body
+
 
     const usernameExists = await User.findOne({ username })
-
+    console.log('username exists', usernameExists)
     if(usernameExists) {
+        console.log('backend user exists')
         res.status(400).json({
-            error: 'Username is taken.'
+            message: 'Username is taken.'
         })
-        const error = new Error('Username is already in use.')
-        next(error)
+        throw new Error('Username already in use.')
     }
+    
 
-    const user = await createUser({
-        _id,
-        username
+    console.log('awaiting firebase create')
+    const firebaseUser = await admin.auth().createUser({
+        email: email,
+        password: password
     })
 
-    if(user){
-        res.status(201).json({
-            _id: user._id
+    console.log('firebase user', firebaseUser)
+
+    if(firebaseUser) {
+        console.log('firebase success awaiting user create')
+        const user = await createUser({
+            _id: firebaseUser.uid,
+            username
         })
-    } else {
-        res.status(400)
-        const error =  new Error("Error on creating new User document")
-        next(error)
+    
+        if(user){
+            console.log('user success, send response')
+            res.status(201).json({
+                _id: user._id
+            })
+        } else {
+            console.log('user fail')
+            console.log('awaiting firebase user delete')
+            await admin.auth().deleteUser(firebaseUser.uid)
+            res.status(400)
+        }        
     }
+
 })
 
 // const getUserByIdController = asyncHandler(async (req: Request, res: Response) => {

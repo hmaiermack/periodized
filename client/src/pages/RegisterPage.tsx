@@ -35,77 +35,32 @@ const RegisterPage = () => {
 
     const submitHandler: SubmitHandler<IFormInputs> = async (input: IFormInputs) => {
             
-        //context is being updated causing a rerender of page
-        const userCredential = await auth.createUserWithEmailAndPassword(input.Email, input.Password)
-        console.log(userCredential);
-        const user = userCredential.user
-
         const create = await fetch('http://localhost:1337/api/users/register', {
             method: 'POST',
             mode: 'cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
                 username: input.Username,
-                uid: user?.uid
+                email: input.Email,
+                password: input.Password
             })
         })
 
+        console.log('response ok?', create.ok);
+
         if(!create.ok) {
            const response = await create.json()
-           console.log(response);
+           console.log(typeof response);
+           console.log(typeof response.message);
            if(response.message === "Username is already taken."){ 
-               setError("Username", {
-                type: "manual",
-                message: "Username is already taken."
-               })
+               throw new Error('username error');
+            //    setError("Username", {
+            //     type: "manual",
+            //     message: "Username is already taken."
+            //    })
         }
-           user?.delete()
         }
-
-        if(!userCredential) {
-            //set error stuff
-        }
-
-            // await auth.createUserWithEmailAndPassword(input.Email, input.Password)
-            //     .then((userCredential) => {
-            //         console.log('user created');
-            //         const user = userCredential.user
-            //         fetch('http://localhost:1337/api/users/register', {
-            //             method: 'POST',
-            //             mode: 'cors',
-            //             headers: { 'Content-Type': 'application/json' },
-            //             body: JSON.stringify({ 
-            //                 username: input.Username,
-            //                 uid: user?.uid
-            //             })
-            //         })
-            //         .then(res => {
-            //             console.log(res);
-            //             console.log(res.json())
-            //             if(!res.ok){
-            //                 throw new Error(res.json())
-            //             }
-            //             console.log('jsonifying server response');
-            //             res.json()
-            //         })
-            //         .then(json => {
-            //             console.log('logging jsonified server response ' + json)
-            //             console.log('pushing to home');
-            //             history.push('/')
-            //             })    
-            //         .catch((e) => {
-            //             console.log('deleting fb user');
-            //             user?.delete()
-            //             console.log('logging server error');
-            //             console.log(e)
-            //         })
-            //     })
-            //     .catch(e => {
-            //         console.log('logging firebase error');
-            //         console.log(e)
-            //     })
     }
-
     return (
         <div className="container">
             <div className="min-h-screen bg-gray-100 flex flex-col justify-center">
