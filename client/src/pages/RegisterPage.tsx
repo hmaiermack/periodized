@@ -50,15 +50,21 @@ const RegisterPage = () => {
 
         if(!create.ok) {
            const response = await create.json()
-           console.log(typeof response);
-           console.log(typeof response.message);
-           if(response.message === "Username is already taken."){ 
-               throw new Error('username error');
-            //    setError("Username", {
-            //     type: "manual",
-            //     message: "Username is already taken."
-            //    })
-        }
+           const message = response.message
+           console.log(message);
+           if(message === "Username is taken."){ 
+               console.log('username error');
+               setError("Username", {
+                type: "manual",
+                message: "Username is already in use."
+               })
+            } else if (message.includes("email")) {
+                console.log('email error');
+                setError("Email", {
+                 type: "manual",
+                 message: "Email is already in use."
+                })
+            }
         }
     }
     return (
