@@ -9,20 +9,16 @@ interface Props {
 }
 
 const signIn = async () => {
-    try {
       await auth.signInWithEmailAndPassword(
-        "hmaiermack@gmail.com",
-        "candid55"
+        "test@test.com",
+        "Testpassword!1"
       );
-    } catch (error) {
-      console.error(error);
-    }
   };
 
 const UnauthenticatedApp = (props: Props) => {
     return (
       <Router>
-            <Route path='/register'>
+            <Route exact path='/register'>
                 <RegisterPage />
             </Route>
         <div>

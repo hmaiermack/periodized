@@ -44,9 +44,6 @@ const getUser = async () => {
 const AuthenticatedApp = () => {
     return (
         <Router>
-            <Route path='/register'>
-                <RegisterPage />
-            </Route>
             <div className="min-h-screen bg-gray-100 flex flex-col justify-center">
                 <div>
                     Authenticated!

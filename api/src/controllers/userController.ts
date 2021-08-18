@@ -1,10 +1,12 @@
 import mongoose from 'mongoose'
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
+import createError from 'http-errors'
+
 import asyncHandler from 'express-async-handler'
 import { User } from '../models/User.model'
 import { createUser, deleteUser, getUserById } from '../services/userServices/index'
 
-const createUserController = asyncHandler(async (req: Request, res: Response) => {
+const createUserController = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
 
     const _id = req.body.uid
     const username = req.body.username
@@ -12,8 +14,11 @@ const createUserController = asyncHandler(async (req: Request, res: Response) =>
     const usernameExists = await User.findOne({ username })
 
     if(usernameExists) {
-        res.status(400)
-        throw new Error('That username is already taken.')
+        res.status(400).json({
+            error: 'Username is taken.'
+        })
+        const error = new Error('Username is already in use.')
+        next(error)
     }
 
     const user = await createUser({
@@ -27,7 +32,8 @@ const createUserController = asyncHandler(async (req: Request, res: Response) =>
         })
     } else {
         res.status(400)
-        throw new Error("Something went wrong")
+        const error =  new Error("Error on creating new User document")
+        next(error)
     }
 })
 
