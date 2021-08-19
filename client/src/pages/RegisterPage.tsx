@@ -5,6 +5,7 @@ import YupPassword from 'yup-password'
 import { auth } from '../firebaseSetup';
 import FormInput from '../components/FormInput';
 import { useHistory } from 'react-router-dom';
+import { createUser } from '../services/user/createUser';
 //extend yup
 YupPassword(yup)
 
@@ -22,7 +23,7 @@ const registerSchema = yup.object().shape({
     Username: yup.string().required(),
     Email: yup.string().email().required(),
     Password: yup.string().password().required(),
-    confirmation: yup.string().password().oneOf([yup.ref("Password"), 'Passwords must match.'])
+    Confirmation: yup.string().oneOf([yup.ref("Password")], 'Passwords must match.')
 })
 
 const RegisterPage = () => {
@@ -33,51 +34,20 @@ const RegisterPage = () => {
     });
 
     const submitHandler: SubmitHandler<IFormInputs> = async (input: IFormInputs) => {
-            
-        const create = await fetch('http://localhost:1337/api/users/register', {
-            method: 'POST',
-            mode: 'cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                username: input.Username,
-                email: input.Email,
-                password: input.Password
-            })
-        })
 
-        console.log('response ok?', create.ok);
+        const success = await createUser(input.Username, input.Email, input.Password, setError)
 
-        if(!create.ok) {
-           const response = await create.json()
-           const message = response.message
-           console.log(message);
-           if(message === "Username is taken."){ 
-               console.log('username error');
-               setError("Username", {
-                type: "manual",
-                message: "Username is already in use."
-               })
-            } else if (message.includes("email")) {
-                console.log('email error');
-                setError("Email", {
-                 type: "manual",
-                 message: "Email is already in use."
-                })
-            }
+        console.log(success);
 
-            throw new Error('Something went wrong creating your account, please try again.')
-        }
-
-        const signedIn = await auth.signInWithEmailAndPassword(input.Email, input.Password)
-        if(signedIn) {
-            history.push('/')
-        } else {
-            history.push('/login')
-        }
-
-
-        
+        if(success){
+            const signedIn = await auth.signInWithEmailAndPassword(input.Email, input.Password)
+            if(signedIn) {
+                history.push('/')
+            } else {
+                history.push('/login')
+        }}
     }
+
     return (
         <div className="container">
             <div className="min-h-screen bg-gray-100 flex flex-col justify-center">
