@@ -2,10 +2,9 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup'
 import YupPassword from 'yup-password'
-import FormInput from '../components/FormInput';
 import { auth } from '../firebaseSetup';
+import FormInput from '../components/FormInput';
 import { useHistory } from 'react-router-dom';
-import { off } from 'process';
 //extend yup
 YupPassword(yup)
 
@@ -65,7 +64,19 @@ const RegisterPage = () => {
                  message: "Email is already in use."
                 })
             }
+
+            throw new Error('Something went wrong creating your account, please try again.')
         }
+
+        const signedIn = await auth.signInWithEmailAndPassword(input.Email, input.Password)
+        if(signedIn) {
+            history.push('/')
+        } else {
+            history.push('/login')
+        }
+
+
+        
     }
     return (
         <div className="container">
