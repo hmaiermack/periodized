@@ -4,7 +4,7 @@ import { string } from 'yup/lib/locale';
 interface IFormInputProps {
     children: React.ReactNode;
     label: string;
-    required?: boolean
+    required?: boolean;
     register: any;
     errors?: any;
 }

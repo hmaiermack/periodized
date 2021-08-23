@@ -1,29 +1,18 @@
-import React from 'react'
 import { Route, BrowserRouter as Router } from 'react-router-dom';
-import { auth } from '../src/firebaseSetup'
+import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 
-
-interface Props {
-    
-}
-
-const signIn = async () => {
-      await auth.signInWithEmailAndPassword(
-        "test@test.com",
-        "Testpassword!1"
-      );
-  };
-
-const UnauthenticatedApp = (props: Props) => {
+const UnauthenticatedApp = () => {
     return (
       <Router>
             <Route exact path='/register'>
                 <RegisterPage />
             </Route>
+            <Route exact path = '/login'>
+                <LoginPage />
+            </Route>
         <div>
             Unauthenticated :|
-            <button onClick={signIn} style={{display: 'block'}}> Sign In </button>
         </div>
         </Router>
     )
