@@ -58,13 +58,13 @@ const LoginPage = () => {
                 <div className="max-w-md w-full mx-auto bg-white p-8 border border-pGrey-600 rounded">
                     <form onSubmit={handleSubmit(async (formData) => await submitHandler(formData))} className="space-y-6">
                         <FormInput label="Email" register={register} errors={errors.Email} required={true}>
-                            {errors.Email && errors.Email?.message && <span>{errors.Email.message}</span>}
+                            {errors.Email && errors.Email?.message && <span role="alert">{errors.Email.message}</span>}
                         </FormInput>
                         <FormInput label="Password" register={register} errors={errors.Password} required={true}>
-                            {errors.Password && errors.Password?.message && <span>{errors.Password.message}</span>}
+                            {errors.Password && errors.Password?.message && <span role="alert">{errors.Password.message}</span>}
                         </FormInput>
-                        <input type="submit" className="w-full py-2 bg-pBlue-400 hover:bg-pBlue-600 rounded-md text-pGrey-400 text-lg font-bold"></input>
-                        { loginError && <span className="mt-4 text-red-600 font-medium text-lg">{loginError}</span>}
+                        <input type="submit" className="w-full py-2 bg-pBlue-400 hover:bg-pBlue-600 rounded-md text-pGrey-400 text-lg font-bold" value="Log In"></input>
+                        { loginError && <span role="alert" className="mt-4 text-red-600 font-medium text-lg">{loginError}</span>}
                         <span className="block mt-4 text-xs text-gray-500 cursor-pointer hover:text-pOrange-400"><Link to="/register">Create an account</Link></span>
                     </form>
                 </div>
