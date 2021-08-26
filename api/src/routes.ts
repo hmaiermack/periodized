@@ -1,6 +1,7 @@
 import { Express, Request, Response } from "express";
 import express from 'express'
 import { createUserController, deleteUserController } from "./controllers/userController";
+import { createProgramController } from "./controllers/programController";
 
 export function healthCheck (app: Express) {
     app.get('/health', (req: Request, res: Response) => {
@@ -15,4 +16,8 @@ userRouter.route('/register').post(createUserController)
 userRouter.route('/delete').delete(deleteUserController)
 userRouter.post('/login')
 
-export { userRouter }
+const programRouter = express.Router()
+
+programRouter.route('/create').post(createProgramController)
+
+export { userRouter, programRouter }

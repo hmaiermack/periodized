@@ -4,7 +4,7 @@ import config from './config'
 import log from './middleware/logger'
 import connect from './db/connect'
 import cors from 'cors'
-import { healthCheck, userRouter } from './routes'
+import { healthCheck, userRouter, programRouter } from './routes'
 import { decodeIDToken } from './utils/authToken'
 import errorHandlerMiddleware from './middleware/errorHandler'
 require('express-async-errors');
@@ -22,6 +22,7 @@ connect()
 healthCheck(app)
 
 app.use('/api/users', userRouter)
+app.use('/api/programs', programRouter)
 
 app.use(errorHandlerMiddleware)
 

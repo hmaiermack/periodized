@@ -17,24 +17,19 @@ export class ProgramClass {
   @prop()
   public startDate!: Date;
 
+  @prop()
+  public duration!: number;
+
   @prop({
-    //REVISIT
-    //default to 6 months to give a cutoff date for recurring events
-    //this may not be the best architecture to handle this problem
     default: function (this: DocumentType<ProgramClass>) {
-      return add(this.startDate, {months: 6})
+      return add(this.startDate, {months: this.duration})
     }
   })
-  public endDate!: Date;
+  public endDate?: Date;
 
-  //is this even needed? could be done on front end
-  //also could just be frivolous information
-  public get duration(){
-    return differenceInDays(this.endDate, this.startDate)
-  }
 
   @prop({ ref: () => TrainingBlocksClass})
-  public trainingBlocks!: Ref<TrainingBlocksClass>[];
+  public trainingBlocks?: Ref<TrainingBlocksClass>[];
 
 }
 
