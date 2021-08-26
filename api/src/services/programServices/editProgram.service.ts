@@ -1,0 +1,26 @@
+import { mongoose } from "@typegoose/typegoose";
+import { Document } from "mongoose";
+import { ProgramModel, ProgramClass } from "../../models/Program.model";
+
+interface IProgramInfo {
+    id: string,
+    name?: string,
+    duration?: number,
+    trainingBlocks?: mongoose.Types.ObjectId[]
+}
+
+export async function editProgram(programInfo: IProgramInfo) {
+
+    const program = await ProgramModel.findById(programInfo.id)
+
+    if(program) {
+        program.name = programInfo.name || program.name
+        program.duration = programInfo.duration || program.duration
+        program.trainingBlocks = programInfo.trainingBlocks || program.trainingBlocks
+        program.endDate = program.endDate
+    } else {
+        throw new Error('Program not found.')
+    }
+
+    return await program?.save()
+}

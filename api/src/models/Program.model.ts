@@ -21,9 +21,10 @@ export class ProgramClass {
   public duration!: number;
 
   @prop({
-    default: function (this: DocumentType<ProgramClass>) {
-      return add(this.startDate, {months: this.duration})
-    }
+    set: function (this: DocumentType<ProgramClass>) {
+      add(this.startDate, {months: this.duration}) 
+    },
+    get: (date) => date
   })
   public endDate?: Date;
 
