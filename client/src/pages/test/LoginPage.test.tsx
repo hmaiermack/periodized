@@ -4,7 +4,7 @@ import LoginPage from '../LoginPage'
 import { BrowserRouter as Router } from 'react-router-dom'
 import '@testing-library/jest-dom/extend-expect'
 
-describe('Login Page', () => {
+describe.skip('Login Page', () => {
 
     beforeEach(() => {
         render(
