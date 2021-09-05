@@ -22,7 +22,6 @@ function App() {
       const res = await fetch('/healthcheck')
       console.log(res.json())
     }
-
     testMsw()
   }, [])
 

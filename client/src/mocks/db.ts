@@ -2,8 +2,8 @@ import { factory, manyOf, oneOf, primaryKey } from '@mswjs/data';
 
 export const db = factory({
     user: {
-        id: primaryKey(String),
-        username: String,
+        id: primaryKey(() => 'user1'),
+        username: 'user1',
         currentProgram: oneOf('programs')
     },
     programs: {

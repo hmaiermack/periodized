@@ -4,6 +4,7 @@ import {
     Route,
   } from "react-router-dom";
 import RegisterPage from './pages/RegisterPage';  
+import { useModal } from './context/ModalContext';
 
 
 const signOut = async () => {
@@ -42,6 +43,8 @@ const getUser = async () => {
 }
 
 const AuthenticatedApp = () => {
+    const {dispatch} = useModal()
+
     return (
         <Router>
             <div className="min-h-screen bg-gray-100 flex flex-col justify-center">
@@ -52,6 +55,9 @@ const AuthenticatedApp = () => {
                     <button onClick={deleteUser} style={{display: 'block'}}>Delete user</button>
                 </div>
             </div>
+        <button onClick={() => dispatch({type: 'open', payload: 'newprogram'})}>
+            new program
+        </button>
         </Router>
     )
 }
