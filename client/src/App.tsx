@@ -6,13 +6,24 @@ import {useAuth} from './provider/AuthProvider'
 const loadAuthenticatedApp = () => import('./AuthenticatedApp')
 const AuthenticatedApp = React.lazy(loadAuthenticatedApp)
 const UnauthenticatedApp = React.lazy(() => import('./UnauthenticatedApp'))
+  
 
 function App() {
   const authenticated = useAuth()
 
+
   //pre-load the authenticated app in the background while auth is happening
   React.useEffect(() => {
     loadAuthenticatedApp()
+  }, [])
+
+  React.useEffect(() => {
+    async function testMsw() {
+      const res = await fetch('/healthcheck')
+      console.log(res.json())
+    }
+
+    testMsw()
   }, [])
 
   //Will never render Authenticated app components routes etc if no user logged in.
