@@ -5,6 +5,7 @@ import {
   } from "react-router-dom";
 import RegisterPage from './pages/RegisterPage';  
 import { useModal } from './context/ModalContext';
+import NewProgramModal from './components/NewProgramModal';
 
 
 const signOut = async () => {
@@ -43,11 +44,12 @@ const getUser = async () => {
 }
 
 const AuthenticatedApp = () => {
-    const {dispatch} = useModal()
+    const {state, dispatch} = useModal()
 
     return (
         <Router>
             <div className="min-h-screen bg-gray-100 flex flex-col justify-center">
+                <span className="font-bold text-2xl text-red-500">{state.isOpen ? 'isOpen is true' : 'isOpen is false'}</span>
                 <div>
                     Authenticated!
                     <button onClick={signOut} style={{display: 'block'}}>Sign Out</button>
@@ -58,6 +60,7 @@ const AuthenticatedApp = () => {
         <button onClick={() => dispatch({type: 'open', payload: 'newprogram'})}>
             new program
         </button>
+        <NewProgramModal />
         </Router>
     )
 }
