@@ -6,6 +6,7 @@ import {
 import RegisterPage from './pages/RegisterPage';  
 import { useModal } from './context/ModalContext';
 import NewProgramModal from './components/NewProgramModal';
+import { useEffect } from 'react';
 
 
 const signOut = async () => {
@@ -42,6 +43,24 @@ const getUser = async () => {
     .then(json => JSON.parse(json))
     .then(data => console.log(data))
 }
+const newProgram = () => {
+    const user = auth.currentUser
+
+    fetch('/api/programs', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+        }, 
+        body: JSON.stringify({
+            userId: user?.uid,
+            name: 'test'
+        })
+    }).then(res => res.json())
+    .then(json => console.log(json))
+
+
+}
 
 const AuthenticatedApp = () => {
     const {state, dispatch} = useModal()
@@ -60,6 +79,7 @@ const AuthenticatedApp = () => {
         <button onClick={() => dispatch({type: 'open', payload: 'newprogram'})}>
             new program
         </button>
+        <button onClick={newProgram}>creat prog</button>
         <NewProgramModal />
         </Router>
     )
