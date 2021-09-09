@@ -2,7 +2,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup'
 import YupPassword from 'yup-password'
-import { auth } from '../firebaseSetup';
+import { auth } from '../shared/firebaseSetup';
 import FormInput from '../components/forms/FormInput';
 import { useHistory, Link } from 'react-router-dom';
 import { createUser } from '../services/user/createUser';

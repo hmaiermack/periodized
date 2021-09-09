@@ -1,5 +1,6 @@
 import { rest } from 'msw'
 import { db } from './db'
+import { getMockUser } from './handlerUtils'
 
 interface NewProgramReqBody {
     userId: string,
@@ -12,17 +13,8 @@ export const handlers = [
     }),
 
     rest.post<NewProgramReqBody>('/api/programs', (req, res, ctx) => {
-        const { userId, name } = req.body
-
-        console.log(userId)
-        const user = db.user.create({
-            id: userId,
-            username: 'fred'
-        })
-        console.log(user)
-
-          const users = db.user.getAll()
-          console.log(users)
+        const { name } = req.body
+        const user = getMockUser()
 
           if(user) {
             const program = db.programs.create({

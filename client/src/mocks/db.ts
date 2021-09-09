@@ -35,3 +35,8 @@ export const db = factory({
         exercises: Array
     }
 })
+
+db.user.create({
+    id: "user1",
+    username: "user1"
+})

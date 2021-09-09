@@ -1,12 +1,12 @@
-import { auth } from '../src/firebaseSetup'
+import { auth } from './shared/firebaseSetup'
 import {
     BrowserRouter as Router,
     Route,
   } from "react-router-dom";
-import RegisterPage from './pages/RegisterPage';  
 import { useModal } from './context/ModalContext';
 import NewProgramModal from './components/NewProgramModal';
-import { useEffect } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 
 const signOut = async () => {
@@ -43,45 +43,30 @@ const getUser = async () => {
     .then(json => JSON.parse(json))
     .then(data => console.log(data))
 }
-const newProgram = () => {
-    const user = auth.currentUser
-
-    fetch('/api/programs', {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-            'Content-Type': 'application/json',
-        }, 
-        body: JSON.stringify({
-            userId: user?.uid,
-            name: 'test'
-        })
-    }).then(res => res.json())
-    .then(json => console.log(json))
-
-
-}
+const queryClient = new QueryClient()
 
 const AuthenticatedApp = () => {
     const {state, dispatch} = useModal()
 
     return (
-        <Router>
-            <div className="min-h-screen bg-gray-100 flex flex-col justify-center">
-                <span className="font-bold text-2xl text-red-500">{state.isOpen ? 'isOpen is true' : 'isOpen is false'}</span>
-                <div>
-                    Authenticated!
-                    <button onClick={signOut} style={{display: 'block'}}>Sign Out</button>
-                    <button onClick={getUser} style={{display: 'block'}}>Get user info</button>
-                    <button onClick={deleteUser} style={{display: 'block'}}>Delete user</button>
+        <QueryClientProvider client={queryClient}>
+            <Router>
+                <div className="min-h-screen bg-gray-100 flex flex-col justify-center">
+                    <span className="font-bold text-2xl text-red-500">{state.isOpen ? 'isOpen is true' : 'isOpen is false'}</span>
+                    <div>
+                        Authenticated!
+                        <button onClick={signOut} style={{display: 'block'}}>Sign Out</button>
+                        <button onClick={getUser} style={{display: 'block'}}>Get user info</button>
+                        <button onClick={deleteUser} style={{display: 'block'}}>Delete user</button>
+                    </div>
                 </div>
-            </div>
-        <button onClick={() => dispatch({type: 'open', payload: 'newprogram'})}>
-            new program
-        </button>
-        <button onClick={newProgram}>creat prog</button>
-        <NewProgramModal />
-        </Router>
+            <button onClick={() => dispatch({type: 'open', payload: 'newprogram'})}>
+                new program
+            </button>
+            <NewProgramModal />
+            </Router>
+            <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
     )
 }
 
