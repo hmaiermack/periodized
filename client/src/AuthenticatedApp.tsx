@@ -4,6 +4,7 @@ import {
     Route,
   } from "react-router-dom";
 import RegisterPage from './pages/RegisterPage';  
+import Sidebar from './components/nav/Sidebar';
 
 
 const signOut = async () => {
@@ -44,13 +45,18 @@ const getUser = async () => {
 const AuthenticatedApp = () => {
     return (
         <Router>
-            <div className="min-h-screen bg-gray-100 flex flex-col justify-center">
+            {/* container */}
+            <div className="flex h-full">
+            <Sidebar username="user" currentProgramId="1234"/>
+            {/* content container */}
+            <div className="flex flex-grow flex-col items-center">
                 <div>
                     Authenticated!
                     <button onClick={signOut} style={{display: 'block'}}>Sign Out</button>
                     <button onClick={getUser} style={{display: 'block'}}>Get user info</button>
                     <button onClick={deleteUser} style={{display: 'block'}}>Delete user</button>
                 </div>
+            </div>
             </div>
         </Router>
     )
