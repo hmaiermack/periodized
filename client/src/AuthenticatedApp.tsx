@@ -4,7 +4,7 @@ import {
     Route,
   } from "react-router-dom";
 import { useModal } from './context/ModalContext';
-import NewProgramModal from './components/NewProgramModal';
+import {NewProgramModal} from './components/NewProgramModal/NewProgramModal';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools'
 

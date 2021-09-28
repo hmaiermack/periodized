@@ -1,13 +1,12 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
-import { useModal } from '../context/ModalContext'
+import { useModal } from '../../context/ModalContext'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useHistory } from 'react-router'
-import { useAuth } from '../provider/AuthProvider'
-import { useMutation } from 'react-query'
-import { createNewProgram } from '../shared/api'
+import { useAuth } from '../../provider/AuthProvider'
+import { useCreateProgram } from './useCreateProgram'
 
 interface IFormInput {
     Name: string
@@ -17,16 +16,9 @@ const programNameSchema = yup.object().shape({
     Name: yup.string().max(20).required()
 })
 
-const NewProgramModal = () => {
+export const NewProgramModal = () => {
     const history = useHistory()
-    const { mutateAsync, isLoading, isError } = useMutation(createNewProgram, {
-        onSuccess: (data) => {
-            //clear form data and close modal the direct user to the newly created program page.
-            setValue('Name', '')
-            dispatch({type: 'close'})
-            history.push(`/programs/${data.program.id}`)
-        }
-    })
+    const { mutateAsync, isMutating, isError } = useCreateProgram()
     const {state, dispatch} = useModal()
 
     const user = useAuth()
@@ -38,7 +30,10 @@ const NewProgramModal = () => {
     });
 
     const onSubmit = async (input: IFormInput, userId: string | undefined) => {
-        await mutateAsync({name: input.Name, userId})
+        const res = await mutateAsync({name: input.Name, userId})
+        setValue('Name', '')
+        dispatch({type: 'close'})
+        history.push(`/programs/${res?.program.id}`)
     }
 
     const handleCancel = () => {
@@ -120,5 +115,3 @@ const NewProgramModal = () => {
         </Transition.Root>
     ) : null
 }
-
-export default NewProgramModal
