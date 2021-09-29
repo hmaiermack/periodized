@@ -67,7 +67,7 @@ const AuthenticatedApp = () => {
                 </div>
                 </div>
                 <NewProgramModal />
-                <ReactQueryDevtools initialIsOpen={false} />
+                {/* <ReactQueryDevtools initialIsOpen={false} /> */}
             </Router>
         </QueryClientProvider>
     )

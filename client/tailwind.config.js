@@ -22,6 +22,9 @@ module.exports = {
       },
       transitionProperty: {
         'height': 'height'
+      },
+      maxWidth: {
+        'xxs': '13rem'
       }
     },
     container: {

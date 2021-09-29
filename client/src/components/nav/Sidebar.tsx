@@ -2,6 +2,7 @@ import React, { ReactNode, useState } from "react";
 import { NavLink } from "react-router-dom";
 import DownwardChevron from "../../assets/DownwardChevron"
 import { Transition } from "@headlessui/react"
+import { useModal } from "../../context/ModalContext";
 
 interface ISidebarProps {
     username: string,
@@ -34,10 +35,11 @@ const dummyPrograms = [
 //TODO: keep sidebar content in place when app content overflows viewport height
 
 const Sidebar = ({username, currentProgramId}: ISidebarProps) => {
+    const {state, dispatch} = useModal()
     const [open, setOpen] = useState(false)
 
     return (
-        <div className="min-h-screen w-3/12 max-w-xs space-y-6 bg-gray-100 p-3">
+        <div className="min-h-screen w-3/12 max-w-xxs space-y-6 bg-gray-100 p-3">
             <div className="text-center">
                 <span className="text-xl font-extrabold block">Periodized</span>
                 <span className="text-lg font-semibold block break-words">{username}</span>
@@ -53,7 +55,9 @@ const Sidebar = ({username, currentProgramId}: ISidebarProps) => {
                         <span>Current Program</span>
                     </NavLink>
                     <div className="flex flex-col p-2 rounded-md font-medium ">
-                        <span className="text-left">Programs</span>
+                        <div className="flex">
+                            <span className="text-left">Programs</span>
+                        </div>
                         <div className="flex flex-col p-2 font-sm text-gray-600">
                             {dummyPrograms && 
                                 dummyPrograms.slice(0, 3).map((program) => (
@@ -81,9 +85,10 @@ const Sidebar = ({username, currentProgramId}: ISidebarProps) => {
                                 }
                             </div>
                             </Transition>
-                                <button className={`transition transform duration-300 ${open ? 'rotate-180' : ''} hover:scale-125 text-gray-400 text-lg text-center mx-auto`} onClick={() => setOpen(!open)}>
+                                <button className={`transition transform duration-300 ${open ? 'rotate-180' : ''} hover:scale-125 text-gray-400 text-lg mx-auto`} onClick={() => setOpen(!open)}>
                                     <DownwardChevron />
                                 </button>
+                                <span className="text-xs rounded-md mt-2 bg-gray-100 text-gray-400 p-2 cursor-pointer" onClick={() => dispatch({type: 'open', payload: 'newprogram'})}>&#43; Create new Program</span>
                         </div>
                     </div>
                     <NavLink className="flex items-center space-x-3 p-2 rounded-md font-medium hover:bg-gray-200 focus:shadow-outline break-words" to={`/history`}>
