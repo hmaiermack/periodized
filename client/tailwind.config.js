@@ -19,6 +19,9 @@ module.exports = {
           400: '#4c4c4c',
           600: '#393939'
         }
+      },
+      transitionProperty: {
+        'height': 'height'
       }
     },
     container: {

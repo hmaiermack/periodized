@@ -7,6 +7,8 @@ import { useModal } from './context/ModalContext';
 import {NewProgramModal} from './components/NewProgramModal/NewProgramModal';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools'
+import RegisterPage from './pages/RegisterPage';  
+import Sidebar from './components/nav/Sidebar';
 
 
 const signOut = async () => {
@@ -51,8 +53,11 @@ const AuthenticatedApp = () => {
     return (
         <QueryClientProvider client={queryClient}>
             <Router>
-                <div className="min-h-screen bg-gray-100 flex flex-col justify-center">
-                    <span className="font-bold text-2xl text-red-500">{state.isOpen ? 'isOpen is true' : 'isOpen is false'}</span>
+                {/* container */}
+                <div className="flex h-full">
+                <Sidebar username="user" currentProgramId="1234"/>
+                {/* content container */}
+                <div className="flex flex-grow flex-col items-center">
                     <div>
                         Authenticated!
                         <button onClick={signOut} style={{display: 'block'}}>Sign Out</button>
@@ -60,12 +65,10 @@ const AuthenticatedApp = () => {
                         <button onClick={deleteUser} style={{display: 'block'}}>Delete user</button>
                     </div>
                 </div>
-            <button onClick={() => dispatch({type: 'open', payload: 'newprogram'})}>
-                new program
-            </button>
-            <NewProgramModal />
+                </div>
+                <NewProgramModal />
+                <ReactQueryDevtools initialIsOpen={false} />
             </Router>
-            <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
     )
 }
