@@ -2,10 +2,10 @@ import { INewProgramFields } from "./apiTypes"
 import { currentUserToken } from "./currentUser"
 
 const apiUrl = process.env.REACT_APP_API_URL
-const token = currentUserToken()
 
 export const getUser = async () => {
-    const res = await fetch(`${apiUrl}/users`, {
+    const token = await currentUserToken()
+    const res = await fetch(`${apiUrl}/user`, {
         method: 'GET',
         mode: 'cors',
         headers: {
@@ -24,6 +24,8 @@ export const getUser = async () => {
 
 
 export const createNewProgram = async (data: INewProgramFields) => {
+    const token = await currentUserToken()
+
 
     const response = await fetch(`${apiUrl}/programs`, {
         method: 'POST',
@@ -40,4 +42,24 @@ export const createNewProgram = async (data: INewProgramFields) => {
     }
     
     return response.json()
+}
+
+export const getProgramById = async (id: string) => {
+    const token = await currentUserToken()
+
+    const res = await fetch(`${apiUrl}/programs/${id}`, {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    })
+
+    if(!res.ok) {
+        throw new Error("Something went wrong.")
+    }
+
+    return res.json()
+
 }

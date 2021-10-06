@@ -32,9 +32,10 @@ export const NewProgramModal = () => {
 
     const onSubmit = async (input: IFormInput, userId: string | undefined) => {
         const res = await mutateAsync({name: input.Name, userId})
+        queryClient.invalidateQueries('user')
         setValue('Name', '')
         dispatch({type: 'close'})
-        history.push(`/programs/${res?.program.id}`)
+        history.push(`/programs/${res?.programId}`)
     }
 
     const handleCancel = () => {

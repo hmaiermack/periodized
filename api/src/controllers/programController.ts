@@ -79,9 +79,7 @@ const editProgramController = asyncHandler(async (req: Request, res: Response, n
 
 const getProgramByIdController = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
 
-    console.log(req.params.id)
     const program = await ProgramModel.findOne({_id: req.params.id})
-    console.log(program)
 
     if(program){
         res.status(200).json({

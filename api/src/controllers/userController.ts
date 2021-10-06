@@ -56,6 +56,7 @@ const createUserController = asyncHandler(async (req: Request, res: Response, ne
 })
 
 const getUserByIdController = asyncHandler(async (req: Request, res: Response) => {
+    console.log(req.currentUser.uid)
     const _id = req.currentUser.uid
 
     const user = await User.findById(_id)

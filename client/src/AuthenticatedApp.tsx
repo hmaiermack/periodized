@@ -17,7 +17,7 @@ const AuthenticatedApp = () => {
             <Router>
                 {/* container */}
                 <div className="flex h-full">
-                <Sidebar username="user" currentProgramId="1234"/>
+                <Sidebar username={data?.username} currentProgramId={data?.currentProgram} programList={data?.programs}/>
                 {/* content container */}
                 <div className="flex flex-grow flex-col items-center bg-gray-200">
                     <div>
