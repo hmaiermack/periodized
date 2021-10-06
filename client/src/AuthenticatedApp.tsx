@@ -15,7 +15,7 @@ const deleteUser = async () => {
     const user = auth.currentUser
     const token = user && (await user.getIdToken())
 
-    fetch('http://localhost:1337/api/users/delete', {
+    fetch('http://localhost:1337/api/user/delete', {
         method: 'DELETE',
         mode: 'cors',
         headers: {

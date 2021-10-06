@@ -21,7 +21,7 @@ app.use(decodeIDToken.unless({ path: ['/users/register']}))
 connect()
 healthCheck(app)
 
-app.use('/api/users', userRouter)
+app.use('/api/user', userRouter)
 app.use('/api/programs', programRouter)
 
 app.use(errorHandlerMiddleware)
