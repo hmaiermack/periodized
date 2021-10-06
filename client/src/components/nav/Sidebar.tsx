@@ -39,7 +39,7 @@ const Sidebar = ({username, currentProgramId}: ISidebarProps) => {
     const [open, setOpen] = useState(false)
 
     return (
-        <div className="min-h-screen w-3/12 max-w-xxs space-y-6 bg-gray-100 p-3">
+        <div className="min-h-screen w-3/12 max-w-xxs space-y-6 p-3 bg-gray-100 shadow-lg">
             <div className="text-center">
                 <span className="text-xl font-extrabold block">Periodized</span>
                 <span className="text-lg font-semibold block break-words">{username}</span>
@@ -88,7 +88,7 @@ const Sidebar = ({username, currentProgramId}: ISidebarProps) => {
                                 <button className={`transition transform duration-300 ${open ? 'rotate-180' : ''} hover:scale-125 text-gray-400 text-lg mx-auto`} onClick={() => setOpen(!open)}>
                                     <DownwardChevron />
                                 </button>
-                                <span className="text-xs rounded-md mt-2 bg-gray-100 text-gray-400 p-2 cursor-pointer" onClick={() => dispatch({type: 'open', payload: 'newprogram'})}>&#43; Create new Program</span>
+                                <span className="text-xs rounded-md mt-2 text-gray-400 p-2 cursor-pointer transition transform hover:scale-110" onClick={() => dispatch({type: 'open', payload: 'newprogram'})}>&#43; Create new Program</span>
                         </div>
                     </div>
                     <NavLink className="flex items-center space-x-3 p-2 rounded-md font-medium hover:bg-gray-200 focus:shadow-outline break-words" to={`/history`}>

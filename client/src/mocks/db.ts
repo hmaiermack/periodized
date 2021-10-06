@@ -4,7 +4,8 @@ export const db = factory({
     user: {
         id: primaryKey(String),
         username: String,
-        currentProgram: oneOf('programs')
+        currentProgram: oneOf('programs'),
+        programs: manyOf('programs')
     },
     programs: {
         id: primaryKey(String),
@@ -34,9 +35,4 @@ export const db = factory({
         progressionRules: Object,
         exercises: Array
     }
-})
-
-db.user.create({
-    id: "user1",
-    username: "user1"
 })
