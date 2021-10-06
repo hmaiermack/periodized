@@ -1,7 +1,7 @@
 import { UseFormSetError } from "react-hook-form";
 export const createUser = async (username: string, email: string, password: string, setError: UseFormSetError<any>): Promise<Boolean> => {
     try {
-        const create = await fetch('http://localhost:1337/api/users/register', {
+        const create = await fetch('http://localhost:1337/api/user/register', {
             method: 'POST',
             mode: 'cors',
             headers: { 'Content-Type': 'application/json' },

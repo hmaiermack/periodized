@@ -17,7 +17,6 @@ export async function editProgram(programInfo: IProgramInfo) {
         program.name = programInfo.name || program.name
         program.duration = programInfo.duration || program.duration
         program.trainingBlocks = programInfo.trainingBlocks || program.trainingBlocks
-        program.endDate = program.endDate
     } else {
         throw new Error('Program not found.')
     }

@@ -15,19 +15,10 @@ export class ProgramClass {
   public user!:  Ref<UserClass, string>;
 
   @prop()
-  public startDate!: Date;
+  public startDate?: Date;
 
   @prop()
-  public duration!: number;
-
-  @prop({
-    set: function (this: DocumentType<ProgramClass>) {
-      add(this.startDate, {months: this.duration}) 
-    },
-    get: (date) => date
-  })
-  public endDate?: Date;
-
+  public duration?: number;
 
   @prop({ ref: () => TrainingBlocksClass})
   public trainingBlocks?: Ref<TrainingBlocksClass>[];

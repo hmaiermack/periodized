@@ -6,6 +6,7 @@ import asyncHandler from 'express-async-handler'
 import { User } from '../models/User.model'
 import { createUser, deleteUser, getUserById } from '../services/userServices/index'
 import admin from 'firebase-admin'
+import { ProgramModel } from '../models/Program.model'
 
 
 const createUserController = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
@@ -54,23 +55,27 @@ const createUserController = asyncHandler(async (req: Request, res: Response, ne
 
 })
 
-// const getUserByIdController = asyncHandler(async (req: Request, res: Response) => {
-//     const _id = req.currentUser.uid
+const getUserByIdController = asyncHandler(async (req: Request, res: Response) => {
+    const _id = req.currentUser.uid
 
-//     const user = await getUserById({ _id })
-
-//     if(user){
-//         res.status(201).json({
-//             _id: user._id,
-//             username: user.username
-//         })
-//     } else {
-//         res.status(400).json({
-//             message: 'User not found'
-//         })
-//         throw new Error()
-//     }
-// })
+    const user = await User.findById(_id)
+    const programList = await ProgramModel.find({
+        user: _id
+    }, '_id name')
+    if(user){
+        res.status(201).json({
+            _id: user._id,
+            username: user.username,
+            currentProgram: user.currentProgram,
+            programs: programList
+        })
+    } else {
+        res.status(400).json({
+            message: 'User not found'
+        })
+        throw new Error()
+    }
+})
 
 const deleteUserController = asyncHandler(async (req: Request, res: Response) => {
     const _id = req.currentUser.uid
@@ -92,5 +97,6 @@ const deleteUserController = asyncHandler(async (req: Request, res: Response) =>
 
 export {
     createUserController,
-    deleteUserController
+    deleteUserController,
+    getUserByIdController
 }
