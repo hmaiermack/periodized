@@ -4,7 +4,7 @@ import createError from 'http-errors'
 
 import asyncHandler from 'express-async-handler'
 import { User } from '../models/User.model'
-import { createUser, deleteUser, getUserById } from '../services/userServices/index'
+import { createUser, deleteUser } from '../services/userServices/index'
 import admin from 'firebase-admin'
 import { ProgramModel } from '../models/Program.model'
 

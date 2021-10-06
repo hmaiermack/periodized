@@ -15,9 +15,6 @@ export class ProgramClass {
   public user!:  Ref<UserClass, string>;
 
   @prop()
-  public startDate?: Date;
-
-  @prop()
   public duration?: number;
 
   @prop({ ref: () => TrainingBlocksClass})
