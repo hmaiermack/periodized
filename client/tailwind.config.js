@@ -25,6 +25,9 @@ module.exports = {
       },
       maxWidth: {
         'xxs': '13rem'
+      },
+      minHeight: {
+        'dndItem': '25px'
       }
     },
     container: {

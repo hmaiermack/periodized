@@ -1,17 +1,18 @@
 import {
     BrowserRouter as Router,
-    Route,
+    Switch,
+    Route
   } from "react-router-dom";
+  import { useCallback } from "react";
 import {NewProgramModal} from './components/NewProgramModal/NewProgramModal';
 import { ReactQueryDevtools } from 'react-query/devtools'
-import RegisterPage from './pages/RegisterPage';  
 import Sidebar from './components/nav/Sidebar';
 import { useQuery } from "react-query";
 import { getUser } from "./shared/api"
+import EditProgramPage from "./pages/EditProgramPage";
 
 const AuthenticatedApp = () => {
     const {status, data, error } = useQuery('user', getUser)
-    console.log("authapp" + data);
 
     return (
             <Router>
@@ -20,9 +21,12 @@ const AuthenticatedApp = () => {
                 <Sidebar username={data?.username} currentProgramId={data?.currentProgram} programList={data?.programs}/>
                 {/* content container */}
                 <div className="flex flex-grow flex-col items-center bg-gray-200">
-                    <div>
-                        Authenticated!
-                    </div>
+                    <Switch>
+                        <Route path="/programs/:id">
+                            <EditProgramPage />
+                        </Route>
+
+                    </Switch>
                 </div>
                 </div>
                 <NewProgramModal />
