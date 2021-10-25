@@ -27,7 +27,9 @@ module.exports = {
         'xxs': '13rem'
       },
       minHeight: {
-        'dndItem': '25px'
+        'dndItem': '25px',
+        'droppable': '8rem',
+        'droppableContainer': '24rem'
       }
     },
     container: {
@@ -36,7 +38,9 @@ module.exports = {
     
   },
   variants: {
-    extend: {},
+    extend: {
+      opacity: ['disabled']
+    },
   },
   plugins: [],
 }

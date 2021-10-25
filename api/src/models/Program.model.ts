@@ -18,8 +18,7 @@ export class ProgramClass {
   public duration?: number;
 
   @prop({ ref: () => TrainingBlocksClass})
-  public trainingBlocks?: Ref<TrainingBlocksClass>[];
+  public trainingBlocksSeries?: Ref<TrainingBlocksClass>[];
 
 }
 
-export const ProgramModel = getModelForClass(ProgramClass)

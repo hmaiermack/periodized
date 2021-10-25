@@ -1,6 +1,7 @@
 import { mongoose } from "@typegoose/typegoose";
 import { Document } from "mongoose";
-import { ProgramModel, ProgramClass } from "../../models/Program.model";
+import {  ProgramClass } from "../../models/Program.model";
+import { ProgramModel } from "../../models"
 
 interface IProgramInfo {
     id: string,

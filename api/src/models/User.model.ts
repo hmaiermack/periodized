@@ -17,7 +17,5 @@ export class UserClass {
 
   @prop({ref: () => ProgramClass})
   public currentProgram?: Ref<ProgramClass>
-
 }
 
-export const User = getModelForClass(UserClass)

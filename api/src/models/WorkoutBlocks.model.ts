@@ -20,4 +20,3 @@ export class WorkoutBlocksClass {
   
 }
 
-export const WorkoutBlocksModel = getModelForClass(WorkoutBlocksClass)

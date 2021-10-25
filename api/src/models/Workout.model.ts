@@ -84,5 +84,3 @@ class Exercise {
     })
     public mostRecentExerciseData?: ExerciseData[]
 }
-
-export const WorkoutModel = getModelForClass(WorkoutClass)

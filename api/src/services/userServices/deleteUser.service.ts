@@ -1,5 +1,6 @@
 import { FilterQuery } from "mongoose";
-import { User, UserClass } from "../../models/User.model";
+import { UserClass } from "../../models/User.model";
+import { User } from "../../models";
 
 export async function deleteUser(query: FilterQuery<UserClass>) {
 

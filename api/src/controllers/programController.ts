@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 
 import asyncHandler from 'express-async-handler'
-import { ProgramModel } from '../models/Program.model'
-import { User } from '../models/User.model'
+import { User, ProgramModel } from '../models'
 import { createProgram } from '../services/programServices/createProgram.service'
 import { editProgram } from '../services/programServices/editProgram.service'
 

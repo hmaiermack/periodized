@@ -1,4 +1,4 @@
-import { INewProgramFields } from "./apiTypes"
+import { INewProgramFields, INewTrainingBlockFields } from "./apiTypes"
 import { currentUserToken } from "./currentUser"
 
 const apiUrl = process.env.REACT_APP_API_URL
@@ -61,5 +61,27 @@ export const getProgramById = async (id: string) => {
     }
 
     return res.json()
+
+}
+
+export const createNewTrainingBlock = async (data: INewTrainingBlockFields) => {
+    const token = await currentUserToken()
+
+
+    const response = await fetch(`${apiUrl}/trainingblocks`, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }, 
+        body: JSON.stringify(data)
+    })
+
+    if(!response.ok) {
+        throw new Error("Something went wrong")
+    }
+    
+    return response.json()
 
 }

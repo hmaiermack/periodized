@@ -87,13 +87,20 @@ const EditProgramPage = () => {
 
     return (
         <div className="min-w-full min-h-full p-8">
+            { isFetching ? <span>fetching</span> : (
+                <div>
             <h1 className="text-2xl text-center font-bold uppercase">{data && data.program.name}</h1>
             <div className="flex flex-col py-8 items-center space-y-8 md:flex-row-reverse md:justify-around md:space-y-0">
                 <DragDropContext onDragEnd={onDragEnd}>
+                {/* passing down both list and backend list allows for comparison between front end state and back end state 
+                    for button disabling
+                */}
                 <DragColumn id='dragColumn' list={columns.dragColumn.items} />
-                <DropColumn id='dropColumn' list={columns.dropColumn.items} />
+                <DropColumn id='dropColumn' list={columns.dropColumn.items} backendList={data && data.program.trainingBlocks} />
                 </DragDropContext>
             </div>
+            </div>
+            )}
         </div>
     )
 }

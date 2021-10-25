@@ -12,15 +12,12 @@ export class TrainingBlocksClass {
     @prop()
     name!: string;
 
-    //just a reference to a user should be ok here, can't think of any benefits to referencing
-    //a program
     @prop({ ref:'UserClass', type: () => String})
     public user!:  Ref<UserClass, string>;
 
-    @prop({ ref: () => WorkoutBlocksClass})
-    public workoutBlocks!: Ref<WorkoutBlocksClass>[];
-  
-  
-}
+    @prop({ ref: () => ProgramClass})
+    public program!:  Ref<ProgramClass>;
 
-export const TrainingBlocksModel = getModelForClass(TrainingBlocksClass)
+    @prop({ ref: () => WorkoutBlocksClass})
+    public workoutBlocksSeries?: Ref<WorkoutBlocksClass>[];
+}

@@ -3,10 +3,9 @@ import { NextFunction, Request, Response } from 'express'
 import createError from 'http-errors'
 
 import asyncHandler from 'express-async-handler'
-import { User } from '../models/User.model'
+import { User, ProgramModel } from '../models'
 import { createUser, deleteUser } from '../services/userServices/index'
 import admin from 'firebase-admin'
-import { ProgramModel } from '../models/Program.model'
 
 
 const createUserController = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {

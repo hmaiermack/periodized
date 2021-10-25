@@ -1,5 +1,6 @@
 import { DocumentDefinition } from "mongoose";
-import { ProgramModel, ProgramClass } from "../../models/Program.model";
+import { ProgramClass } from "../../models/Program.model";
+import { ProgramModel } from "../../models";
 
 export async function createProgram(programInfo: DocumentDefinition<ProgramClass>) {
 
